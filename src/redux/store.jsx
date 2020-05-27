@@ -8,7 +8,7 @@ const initalState = { TODOS: [] };
 function reducer(state = initalState, action) {
   switch (action.type) {
     case 'CREATE_TODO':
-      axios.post(`${process.env.REACT_APP_PATH_NAME}/todo`, action.todo).then((res) => console.log(res));
+      // axios.post(`${process.env.REACT_APP_PATH_NAME}/todo`, action.todo).then((res) => console.log(res));
       return { ...state, TODOS: [...state.TODOS, action.todo] };
 
     case 'DELETE_TODO':

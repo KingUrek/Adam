@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, makeStyles, Typography, ClickAwayListener } from '@material-ui/core';
 import TimePicker from 'react-time-picker';
+import anime from 'animejs/lib/anime.es';
 import TimeDisplay from './TimeDisplay';
 import { ReactComponent as Line } from '../../images/Line.svg';
 
 const useStyles = makeStyles(() => ({
   button: { display: 'block' },
   buttomEnd: { marginLeft: 5 },
-  typo: { color: ' white', marginRight: 5 },
+  typo: { color: 'white', marginRight: 5, opacity: 0 },
 
-  timePicker: { backgroundColor: 'white', border: '1px solid black', margin: '0 5px' },
+  timePicker: { backgroundColor: 'white', border: '1px solid black', margin: '0 5px', opacity: 0 },
 
 }));
 
+
 export default function TimeInput({ setStart, setEnd }) {
+  const startRef = useRef();
   const classes = useStyles();
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -36,6 +39,23 @@ export default function TimeInput({ setStart, setEnd }) {
     setEndTime(time);
   }
 
+  useEffect(() => {
+    const tl = anime.timeline().add({
+      targets: [`.${classes.timePicker}`],
+      opacity: 1,
+      duration: 300,
+      easing: 'easeOutQuint',
+    }).add({
+      targets: `.${classes.typo}`,
+      opacity: 1,
+      translateX: ['150%', 0],
+      duration: 300,
+      easing: 'easeOutQuint',
+
+    });
+    console.log(tl.duration);
+  }, [startTimeOpen]);
+
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', margin: '5px 0' }}>
@@ -45,7 +65,6 @@ export default function TimeInput({ setStart, setEnd }) {
           onClick={() => setStartTimeOpen(true)}
           classes={{ root: classes.button, label: classes.label }}
           variant="outlined"
-          color="white"
           size="small"
         >
           Tempo
@@ -54,7 +73,7 @@ export default function TimeInput({ setStart, setEnd }) {
 
       {startTimeOpen && (
         <ClickAwayListener onClickAway={() => setStartTimeOpen(false)}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div ref={startRef} className="start-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
             <Typography className={classes.typo}>
               Inicio
             </Typography>
@@ -91,18 +110,20 @@ export default function TimeInput({ setStart, setEnd }) {
           )}
       </div>
 
-      {startTime && !endTimeOpen && !endTime && (
-        <Button
-          onClick={() => setEndTimeOpen(true)}
-          classes={{ root: classes.buttomEnd, label: classes.label }}
-          variant="outlined"
-          color="white"
-          size="small"
-        >
-          Fim?
-        </Button>
-      )}
-      {startTime && endTimeOpen
+      {
+        startTime && !endTimeOpen && !endTime && (
+          <Button
+            onClick={() => setEndTimeOpen(true)}
+            classes={{ root: classes.buttomEnd, label: classes.label }}
+            variant="outlined"
+            size="small"
+          >
+            Fim?
+          </Button>
+        )
+      }
+      {
+        startTime && endTimeOpen
         && (
           <>
             <Line />
@@ -121,7 +142,8 @@ export default function TimeInput({ setStart, setEnd }) {
               </div>
             </ClickAwayListener>
           </>
-        )}
+        )
+      }
 
     </div>
 

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function InsertTodo({ createTodo }) {
   const classes = useStyles();
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState('');
   const [focus, setFocus] = useState(false);
   const [date, setDate] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,6 +50,7 @@ function InsertTodo({ createTodo }) {
     setDate('');
   }
 
+
   function clickAway() {
     setFocus(false);
   }
@@ -64,7 +65,7 @@ function InsertTodo({ createTodo }) {
         <div style={{ height: 16, marginBottom: 10 }}>
           {focus && title
             && (
-              <div style={{ display: 'flex', height: 16 }} className="">
+              <div style={{ display: 'flex', height: 16 }} className="icons-div">
                 <CalendarIcon onClick={() => setModalOpen(true)} className={classes.icon} />
                 <PriorityIcon className={classes.icon} />
               </div>
@@ -101,7 +102,9 @@ function InsertTodo({ createTodo }) {
           open={modalOpen}
           onClose={() => setModalOpen(false)}
         >
-          <Calendar setdate={setDate} closeModal={() => setModalOpen(false)} />
+          <div>
+            <Calendar setdate={setDate} closeModal={() => setModalOpen(false)} />
+          </div>
         </Modal>
 
 

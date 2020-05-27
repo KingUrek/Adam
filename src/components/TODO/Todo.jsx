@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Checkbox, Typography, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import anime from 'animejs/lib/anime.es';
 
 const moment = require('moment');
 
@@ -23,7 +24,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Todo({ checked: check = false, title, id, date, day }) {
   const classes = useStyles();
-
+  const ref = useRef();
+  useEffect(() => {
+    anime({
+      targets: ref.current,
+      translateY: ['-100%', 0],
+      opacity: [0, 1],
+      duration: 500,
+      easing: 'easeOutQuint',
+    });
+  }, []);
   const [checked, setChecked] = useState(check);
 
 
@@ -40,13 +50,13 @@ export default function Todo({ checked: check = false, title, id, date, day }) {
   }
 
   return (
-    <div>
+    <div ref={ref}>
       <div className={classes.card}>
         <Checkbox onChange={() => setChecked(!checked)} checked={checked} classes={{ root: classes.root }} color="primary" />
         <Typography variant="subtitle2">
           {title}
         </Typography>
-        <Typography className={classes.hour} variant="paragraph">
+        <Typography className={classes.hour}>
           {/* Posso refatorar para melhorar a performace */}
           {!!date.start && displayDate()}
         </Typography>
