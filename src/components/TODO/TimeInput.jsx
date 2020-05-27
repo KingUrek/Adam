@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, makeStyles, Typography, ClickAwayListener } from '@material-ui/core';
 import TimePicker from 'react-time-picker';
 import anime from 'animejs/lib/anime.es';
 import TimeDisplay from './TimeDisplay';
+
 import { ReactComponent as Line } from '../../images/Line.svg';
 
 const useStyles = makeStyles(() => ({
@@ -11,18 +12,18 @@ const useStyles = makeStyles(() => ({
   typo: { color: 'white', marginRight: 5, opacity: 0 },
 
   timePicker: { backgroundColor: 'white', border: '1px solid black', margin: '0 5px', opacity: 0 },
+  opacityClass: { opacity: 1 },
 
 }));
 
 
 export default function TimeInput({ setStart, setEnd }) {
-  const startRef = useRef();
   const classes = useStyles();
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-
   const [startTimeOpen, setStartTimeOpen] = useState(false);
   const [endTimeOpen, setEndTimeOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   function closeStartTime() {
     setStartTime('');
@@ -40,21 +41,46 @@ export default function TimeInput({ setStart, setEnd }) {
   }
 
   useEffect(() => {
-    const tl = anime.timeline().add({
-      targets: [`.${classes.timePicker}`],
+    anime.timeline().add({
+      targets: '.timePickerAnimStart',
       opacity: 1,
       duration: 300,
       easing: 'easeOutQuint',
     }).add({
-      targets: `.${classes.typo}`,
+      targets: '.typoAnimStart',
       opacity: 1,
       translateX: ['150%', 0],
       duration: 300,
       easing: 'easeOutQuint',
-
     });
-    console.log(tl.duration);
   }, [startTimeOpen]);
+
+  useEffect(() => {
+    if (editMode) {
+      anime.timeline().add({
+        targets: '.stroke',
+        strokeDashoffset: [158, 0],
+        duration: 400,
+        easing: 'easeOutSine',
+
+      }, '-=200').add({
+        targets: '.timePickerAnimEnd',
+        opacity: [0, 1],
+        duration: 400,
+        easing: 'easeOutQuint',
+
+
+      }).add({
+        targets: '.typoAnimEnd',
+        opacity: [0, 1],
+        translateX: ['-150%', 0],
+        duration: 200,
+        easing: 'easeOutQuint',
+
+
+      }).finished.then(setEditMode(false));
+    }
+  }, [!!startTime, endTimeOpen]);
 
 
   return (
@@ -73,13 +99,13 @@ export default function TimeInput({ setStart, setEnd }) {
 
       {startTimeOpen && (
         <ClickAwayListener onClickAway={() => setStartTimeOpen(false)}>
-          <div ref={startRef} className="start-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
-            <Typography className={classes.typo}>
+          <div className="start-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography className={`${classes.typo} typoAnimStart`}>
               Inicio
             </Typography>
 
             <TimePicker
-              className={classes.timePicker}
+              className={`${classes.timePicker} timePickerAnimStart`}
               onChange={startTimeChange}
               value={startTime}
               disableClock
@@ -105,7 +131,7 @@ export default function TimeInput({ setStart, setEnd }) {
           && (
             <>
               <Line />
-              <TimeDisplay onClick={() => setEndTimeOpen(true)} labelEnd close={() => setEndTime('')}>{endTime}</TimeDisplay>
+              <TimeDisplay onClick={() => { setEndTimeOpen(true); }} labelEnd close={() => setEndTime('')}>{endTime}</TimeDisplay>
             </>
           )}
       </div>
@@ -113,7 +139,7 @@ export default function TimeInput({ setStart, setEnd }) {
       {
         startTime && !endTimeOpen && !endTime && (
           <Button
-            onClick={() => setEndTimeOpen(true)}
+            onClick={() => { setEndTimeOpen(true); setEditMode(true); }}
             classes={{ root: classes.buttomEnd, label: classes.label }}
             variant="outlined"
             size="small"
@@ -126,17 +152,18 @@ export default function TimeInput({ setStart, setEnd }) {
         startTime && endTimeOpen
         && (
           <>
-            <Line />
+            <Line className="LineAnim" />
             <ClickAwayListener onClickAway={() => setEndTimeOpen(false)}>
               <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
                 <TimePicker
-                  className={classes.timePicker}
+                  style={{ opacity: 1 }}
+                  className={`${classes.timePicker} ${classes.opacityClass} timePickerAnimEnd`}
                   onChange={endTimeChange}
                   value={endTime}
                   disableClock
                 />
 
-                <Typography className={classes.typo}>
+                <Typography style={{ opacity: 1 }} className={`${classes.typo} typoAnimEnd`}>
                   Final
                 </Typography>
               </div>

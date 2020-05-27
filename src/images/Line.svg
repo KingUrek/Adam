@@ -1,6 +1,6 @@
 <svg width="163" height="5" viewBox="0 0 163 5" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 0H5V5H0V0Z" fill="white"/>
 <path d="M158 0H163V5H158V0Z" fill="white"/>
-<line x1="3" y1="2.5" x2="161" y2="2.5" stroke="white"/>
+<line class="stroke" style="stroke-dasharray: 158;stroke-dashoffset:0;" x1="3" y1="2.5" x2="161" y2="2.5" stroke="white"/>
 </svg>
 

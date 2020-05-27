@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTransition, useTrail, animated } from 'react-spring';
+import { useTrail, animated } from 'react-spring';
 import SideBar from '../../components/TODO/SideBar';
 import TaskContainer from '../../components/TODO/AllTasks/TaskContainer';
 
