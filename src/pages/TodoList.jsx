@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Todo from '../components/ToDo/Todo';
+import Todo from '../components/TODO/Todo';
 import { createTodo } from '../redux/actionCreators';
-import NewTodo from '../components/ToDo/NewTodo';
+import NewTodo from '../components/TODO/NewTodo';
 
 function TodoList({ TODOS }) {
   const [addMode, setAddMode] = useState(false);
@@ -14,7 +14,7 @@ function TodoList({ TODOS }) {
 
       <div>
         {TODOS.map((todo) => (
-          <Todo {...todo}>{todo.description}</Todo>
+          <Todo key={todo.id} {...todo}>{todo.description}</Todo>
         ))}
       </div>
     </div>

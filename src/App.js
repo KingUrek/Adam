@@ -1,8 +1,15 @@
 import React from 'react';
-import TodoList from './pages/TodoList';
+import { ThemeProvider } from '@material-ui/core';
+import darkTheme from './style/darkTheme';
+import AllTasks from './pages/TODO/AllTasks';
+import './style/app.css';
 
 function App() {
-  return <TodoList />;
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <AllTasks />
+    </ThemeProvider>
+  );
 }
 
 export default App;
