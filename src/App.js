@@ -4,12 +4,13 @@ import darkTheme from './style/darkTheme';
 import AllTasks from './pages/TODO/AllTasks';
 import './style/app.css';
 import PriorityList from './components/TODO/PriorityList';
+import DayPage from './pages/TODO/DayPage';
 
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <AllTasks />
-      {/* <PriorityList /> */}
+      {/* <AllTasks /> */}
+      <DayPage />
     </ThemeProvider>
   );
 }
