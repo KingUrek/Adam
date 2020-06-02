@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { makeStyles } from '@material-ui/core';
 import Clock from '../../components/TODO/DayPage/Clock';
+import TaskContainer from '../../components/TODO/AllTasks/TaskContainer';
+
+const useStyle = makeStyles(() => ({
+  container: { display: 'flex', width: '100%' },
+  task: { margin: '0 0 0 80px', width: '40vw' },
+}));
 
 export default function DayPage() {
+  const classes = useStyle();
+  const ref = useRef();
   return (
-    <Clock />
+    <div className={classes.container}>
+      <div className={classes.task}>
+        <TaskContainer day="Hoje" />
+      </div>
+
+      <div ref={ref} style={{ width: '100%' }}>
+        <Clock father={ref} />
+      </div>
+
+
+    </div>
+
   );
 }

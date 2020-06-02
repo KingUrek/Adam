@@ -29,35 +29,17 @@ export default function AllTasks() {
 
 
   return (
-    <Grid alignItems="center" container spacing={0}>
 
-      <Grid classes={{ item: classes['spacing-xs-5'] }} item xs={2}>
-        <SideBar />
-      </Grid>
-      <Grid item xs={10}>
-
-        <Grid container justify="space-around" classes={{ container: classes.container }}>
-
-          {/* <Grid classes={{ item: classes['spacing-xs-5'] }} item xs={4}>
-            <TaskContainer day="Hoje" />
+    <Grid item xs={10}>
+      <Grid container justify="space-around" classes={{ container: classes.container }}>
+        {fade.map((props, index) => (
+          <Grid key={containers[index].item} classes={{ item: classes['spacing-xs-5'] }} item xs={4}>
+            <animated.div style={props}>
+              <TaskContainer day={containers[index].item} />
+            </animated.div>
           </Grid>
+        ))}
 
-          <Grid classes={{ item: classes['spacing-xs-5'] }} item xs={4}>
-            <TaskContainer day="No Futuro" />
-          </Grid>
-
-          <Grid classes={{ item: classes['spacing-xs-5'] }} item xs={4}>
-            <TaskContainer day="Algum Dia" />
-          </Grid> */}
-          {fade.map((props, index) => (
-            <Grid key={containers[index].item} classes={{ item: classes['spacing-xs-5'] }} item xs={4}>
-              <animated.div style={props}>
-                <TaskContainer day={containers[index].item} />
-              </animated.div>
-            </Grid>
-          ))}
-
-        </Grid>
       </Grid>
     </Grid>
 

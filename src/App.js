@@ -1,16 +1,28 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider, Grid, makeStyles } from '@material-ui/core';
 import darkTheme from './style/darkTheme';
 import AllTasks from './pages/TODO/AllTasks';
 import './style/app.css';
 import PriorityList from './components/TODO/PriorityList';
 import DayPage from './pages/TODO/DayPage';
+import SideBar from './components/TODO/SideBar';
+import { Route } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({ container: { display: 'flex' } }));
+
 
 function App() {
+  const classes = useStyles();
   return (
     <ThemeProvider theme={darkTheme}>
-      {/* <AllTasks /> */}
-      <DayPage />
+      <div className={classes.container}>
+        <SideBar />
+        <Route path="/all" component={AllTasks} />
+        <DayPage />
+
+      </div>
+
+
     </ThemeProvider>
   );
 }
