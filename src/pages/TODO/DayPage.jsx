@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Clock from '../../components/TODO/DayPage/Clock';
 import TaskContainer from '../../components/TODO/AllTasks/TaskContainer';
+import ExpansionTaskContainer from '../../components/TODO/DayPage/ExpansionTaskContainer';
 
 const useStyle = makeStyles(() => ({
   container: { display: 'flex', width: '100%' },
@@ -14,7 +15,7 @@ export default function DayPage() {
   return (
     <div className={classes.container}>
       <div className={classes.task}>
-        <TaskContainer day="Hoje" />
+        <ExpansionTaskContainer day="Hoje" />
       </div>
 
       <div ref={ref} style={{ width: '100%' }}>

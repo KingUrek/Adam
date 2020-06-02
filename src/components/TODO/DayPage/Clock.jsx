@@ -3,8 +3,6 @@ import { SVG } from '@svgdotjs/svg.js';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-const timers = [{ start: '00:30', end: '3:30' }, { start: '11:00' }, {}];
-
 function toMinutes(time) {
   return +time.split(':')[0] * 60 + +time.split(':')[1];
 }
@@ -14,7 +12,7 @@ function Clock({ TODOS: todos, father }) {
   const svgDiv = useRef();
   const initialMont = useRef(true);
   const [widthState, setWidthState] = useState(0);
-  const [draw, setDraw] = useState(SVG());
+  const [draw] = useState(SVG());
 
   function drawTask({ start, end }, color, width = widthState) {
     let startCenter;
@@ -51,16 +49,7 @@ function Clock({ TODOS: todos, father }) {
     setWidthState(width);
     const raio = (width - 50) / 2;
     draw.addTo(svgDiv.current).size(width, width);
-    // await setDrawer(draw);
     draw.circle(raio * 2).fill('#C4C4C4').center(width / 2, width / 2); // Clock
-
-
-    // const todosToRender = todos.filter((todo) => moment(todo.date.start, 'L').isSame(moment(), 'day'));
-    // todosToRender.forEach(({ startTime, endTime }) => drawTask({ start: startTime, end: endTime }, 'blue'));
-
-    // drawTask(timers[0], 'black', width);
-    drawTask(timers[1], 'blue', width);
-    // drawTask(timers[2], 'white');
   }
 
   useEffect(() => {
