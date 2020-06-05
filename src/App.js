@@ -18,8 +18,12 @@ function App() {
       <div className={classes.container}>
         <SideBar />
         <Route path="/all" component={AllTasks} />
-        <DayPage />
-
+        <Route path="/today">
+          <DayPage day="Hoje" />
+        </Route>
+        <Route path="/tomorrow">
+          <DayPage day="Amanhã" />
+        </Route>
       </div>
 
 

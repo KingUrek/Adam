@@ -12,23 +12,25 @@ function toMinutes(time, type) {
   return (+time.split(':')[0] - 12) * 60 + +time.split(':')[1];
 }
 
-function filterTodos(todos, type) {
-  function filter(todo) {
-    if (type === 'AM') {
-      return moment(todo.date.startTime, 'HH:mm').isBefore(moment().hour(12).minutes(0));
-    }
-    return moment(todo.date.startTime, 'HH:mm').isAfter(moment().hour(12).minutes(0));
-  }
+function filterTodos(todos, day) {
+  // function filter(todo) {
+  //   if (type === 'AM') {
+  //     return moment(todo.date.startTime, 'HH:mm').isBefore(moment().hour(12).minutes(0));
+  //   }
+  //   return moment(todo.date.startTime, 'HH:mm').isAfter(moment().hour(12).minutes(0));
+  // }
 
 
-  return todos
-    .filter((todo) => (moment(todo.date.start, 'L').isSame(moment(), 'day')))
-    .filter(filter);
+  // return todos
+  //   .filter((todo) => (moment(todo.date.start, 'L').isSame(moment(), 'day')))
+  //   .filter(filter);
+  if (day === 'Hoje') { return todos.filter((todo) => (moment(todo.date.start, 'L').isSame(moment(), 'day'))); }
+  if (day === 'Amanhã') { return todos.filter((todo) => (moment(todo.date.start, 'L').isSame(moment().add(1, 'day'), 'day'))); }
 }
 
-function classifiesTodos(todos) {
+function classifiesTodos(todos, day) {
   let type;
-  const todayTodos = todos.filter((todo) => (moment(todo.date.start, 'L').isSame(moment(), 'day')));
+  const todayTodos = filterTodos(todos, day);
 
   return todayTodos.map((todo) => {
     if (moment(todo.date.startTime, 'HH:mm').isBefore(moment().hour(12).minutes(0))) {
@@ -41,20 +43,17 @@ function classifiesTodos(todos) {
 
 function deleteTodos() {
   const tasks = document.querySelectorAll('.task-circle');
-  console.log(tasks);
   if (tasks.length) { for (let i = tasks.length - 1; i !== -1; i -= 1) { tasks[i].remove(); } }
-
-  console.log(tasks);
 }
 
 // TODO: Melhorar a performance, não precisa sempre deletrar todos
 
-function Clock({ TODOS, type, hide }) {
+function Clock({ TODOS, type, day }) {
   const svgDiv = useRef();
   const initialMont = useRef(true);
   const [widthState, setWidthState] = useState(0);
   const [draw] = useState(SVG());
-  const [todos, setTodos] = useState(classifiesTodos(TODOS));
+  const [todos, setTodos] = useState(classifiesTodos(TODOS, day));
 
   function drawTask({ startTime: start, endTime: end }, color, width = widthState) {
     let startCenter;
@@ -101,7 +100,7 @@ function Clock({ TODOS, type, hide }) {
   }, []);
 
   useEffect(() => {
-    setTodos(classifiesTodos(TODOS));
+    setTodos(classifiesTodos(TODOS, day));
     deleteTodos();
   }, [TODOS, type]);
 

@@ -32,7 +32,7 @@ function TaskContainer({ day, TODOS }) {
       <Typography className={classes.typo} align="center" variant="h4">
         {day}
       </Typography>
-      <InsertTodo />
+      <InsertTodo containerType={day} />
       <div>
         {TODOS.filter(filterTodo).map((todo) => <Todo day={day} {...todo} key={todo.id} />)}
       </div>

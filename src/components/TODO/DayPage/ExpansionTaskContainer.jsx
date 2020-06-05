@@ -62,6 +62,9 @@ function ExpansionTaskContainer({ day, TODOS, setClockType }) {
     if (day === 'Hoje' && todo.date.start) {
       return moment(todo.date.start, 'L').isSame(moment(), 'day');
     }
+    if (day === 'Amanhã' && todo.date.start) {
+      return moment(todo.date.start, 'L').isSame(moment().add(1, 'day'), 'day');
+    }
     if (day === 'No Futuro' && todo.date.start) {
       return !moment(todo.date.start, 'L').isSame(moment(), 'day');
     }
@@ -88,7 +91,7 @@ function ExpansionTaskContainer({ day, TODOS, setClockType }) {
       <Typography className={classes.typo} align="center" variant="h4">
         {day}
       </Typography>
-      <InsertTodo />
+      <InsertTodo containerType={day} />
 
       <div className={classes.expansionContainer}>
 

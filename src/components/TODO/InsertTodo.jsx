@@ -31,18 +31,21 @@ const useStyles = makeStyles((theme) => ({
   button: { alignSelf: 'flex-start', marginTop: theme.spacing(1) },
 }));
 
-function standartDate(day) {
-  if (day === 'Hoje') {
+
+function setDefaultDate(containerType) {
+  if (containerType === 'Hoje') {
     return { start: moment() };
   }
-
+  if (containerType === 'Amanhã') {
+    return { start: moment().add(1, 'day') };
+  }
   return '';
 }
 
-function InsertTodo({ createTodo }) {
+function InsertTodo({ createTodo, containerType }) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState({ start: moment() });
+  const [date, setDate] = useState(setDefaultDate(containerType));
   const [piority, setPiority] = useState(null);
   const [focus, setFocus] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -59,7 +62,7 @@ function InsertTodo({ createTodo }) {
     };
     setTitle('');
     createTodo(todo);
-    setDate(standartDate('Hoje'));
+    setDate(setDefaultDate(containerType));
   }
 
 
