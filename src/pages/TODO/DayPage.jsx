@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import Clock from '../../components/TODO/DayPage/Clock';
 import TaskContainer from '../../components/TODO/AllTasks/TaskContainer';
@@ -12,14 +12,15 @@ const useStyle = makeStyles(() => ({
 export default function DayPage() {
   const classes = useStyle();
   const ref = useRef();
+  const [clockType, setClockType] = useState('AM');
   return (
     <div className={classes.container}>
       <div className={classes.task}>
-        <ExpansionTaskContainer day="Hoje" />
+        <ExpansionTaskContainer setClockType={setClockType} day="Hoje" />
       </div>
 
       <div ref={ref} style={{ width: '100%' }}>
-        <Clock father={ref} />
+        <Clock type={clockType} />
       </div>
 
 

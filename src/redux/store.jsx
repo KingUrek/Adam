@@ -3,7 +3,16 @@ import { createStore } from 'redux';
 
 const axios = require('axios');
 
-const initalState = { TODOS: [] };
+const initalState = {
+  TODOS: [
+    {
+      id: 'VEoOpNLl7Ars3TbZax4hU7p0kHiL5D',
+      title: 'afs',
+      checked: false,
+      date: { start: '05/06/2020', startTime: '11:11', endTime: undefined },
+    },
+  ],
+};
 
 function reducer(state = initalState, action) {
   switch (action.type) {

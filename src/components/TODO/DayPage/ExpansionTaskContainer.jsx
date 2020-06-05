@@ -49,12 +49,13 @@ const ExpansionPanelDetails = withStyles((theme) => ({
 }))(MuiExpansionPanelDetails);
 
 
-function ExpansionTaskContainer({ day, TODOS }) {
+function ExpansionTaskContainer({ day, TODOS, setClockType }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState('AM');
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
+    setClockType(panel);
   };
 
   function filterTodo(todo) {

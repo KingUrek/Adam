@@ -3,6 +3,7 @@ import { TextField, makeStyles, Button, Modal, ClickAwayListener, Popper } from 
 import { connect } from 'react-redux';
 import { AiFillCalendar as CalendarIcon } from 'react-icons/ai';
 import { BsExclamationDiamondFill as PriorityIcon } from 'react-icons/bs';
+import moment from 'moment';
 import { createTodo } from '../../redux/actionCreators';
 import Calendar from './Calendar';
 import InputTimeAdornant from './InputTimeAdornant';
@@ -30,10 +31,18 @@ const useStyles = makeStyles((theme) => ({
   button: { alignSelf: 'flex-start', marginTop: theme.spacing(1) },
 }));
 
+function standartDate(day) {
+  if (day === 'Hoje') {
+    return { start: moment() };
+  }
+
+  return '';
+}
+
 function InsertTodo({ createTodo }) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState({});
+  const [date, setDate] = useState({ start: moment() });
   const [piority, setPiority] = useState(null);
   const [focus, setFocus] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,7 +59,7 @@ function InsertTodo({ createTodo }) {
     };
     setTitle('');
     createTodo(todo);
-    setDate('');
+    setDate(standartDate('Hoje'));
   }
 
 
@@ -94,7 +103,7 @@ function InsertTodo({ createTodo }) {
             className={classes.TextField}
             InputProps={{
               classes: { input: classes.input },
-              endAdornment: <InputTimeAdornant resetDate={() => setDate({})}>{date.start}</InputTimeAdornant>,
+              endAdornment: <InputTimeAdornant setModalOpen={setModalOpen} resetDate={() => setDate({})}>{date.start}</InputTimeAdornant>,
             }}
             variant="outlined"
             placeholder="Adicionar tarefa"

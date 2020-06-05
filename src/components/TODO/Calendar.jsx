@@ -46,10 +46,13 @@ export default function Calendar({ setdate, closeModal }) {
   const [endTime, setEndTime] = useState();
 
   function sendData() {
-    // TODO:Add verification for the endTime(cannot be lower than  startTime)
     console.log(startTime, endTime, moment(startDate).format('L'));
-    setdate({ start: moment(startDate).format('L'), startTime, endTime });
-    closeModal();
+    if (endTime && moment(endTime, 'HH:mm').isBefore(moment(startTime, 'HH:mm'))) {
+      alert('O tempo de término deve ser depois do de começo. Não da pra voltar no tempo, não é mesmo ?');
+    } else {
+      setdate({ start: moment(startDate).format('L'), startTime, endTime });
+      closeModal();
+    }
   }
 
 

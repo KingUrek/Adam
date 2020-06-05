@@ -12,19 +12,29 @@ const useStyle = makeStyles((theme) => ({
     border: `thin solid ${blue[500]}`,
     padding: '0 5px',
     backgroundColor: 'rgba(33, 150, 243, 0.17)',
+    cursor: 'pointer',
   },
   typo: { fontSize: 12, color: blue[500] },
   button: { marginLeft: 5, color: blue[500] },
 }));
-export default function InputTimeAdornant({ children }) {
+export default function InputTimeAdornant({ children, resetDate, setModalOpen }) {
   const classes = useStyle();
+
+  function deleteDate() {
+    resetDate();
+  }
+
+  function editDate() {
+    setModalOpen(true);
+  }
+
   return (
     children ? (
       <div className={classes.wrapper}>
-        <Typography noWrap className={classes.typo}>
+        <Typography onClick={editDate} noWrap className={classes.typo}>
           {moment(children, 'L').format('MMM D')}
         </Typography>
-        <MdClose className={classes.button} size={10} />
+        <MdClose onClick={deleteDate} className={classes.button} size={10} />
       </div>
     ) : null
   );
