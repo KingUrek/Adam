@@ -1,11 +1,11 @@
 import React from 'react';
-import { red, yellow, green } from '@material-ui/core/colors';
+import { red, yellow, green, grey } from '@material-ui/core/colors';
 import { BsExclamationDiamondFill as PriorityIcon } from 'react-icons/bs';
 import { List, ListItem, ListItemText, ListItemIcon, makeStyles, Divider, Popper, ClickAwayListener } from '@material-ui/core';
 
 const priorities = (shade) => [
   { color: red[shade] },
-  { color: yellow[shade] }, { color: green[shade] }, { color: null },
+  { color: yellow[shade] }, { color: green[shade] }, { color: 'rgba(255,255,255,0.3)' },
 ];
 
 const useStyles = makeStyles((theme) => ({

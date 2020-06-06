@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AiFillCalendar as CalendarIcon } from 'react-icons/ai';
 import { BsExclamationDiamondFill as PriorityIcon } from 'react-icons/bs';
 import moment from 'moment';
+import { grey } from '@material-ui/core/colors';
 import { createTodo } from '../../redux/actionCreators';
 import Calendar from './Calendar';
 import InputTimeAdornant from './InputTimeAdornant';
@@ -46,7 +47,7 @@ function InsertTodo({ createTodo, containerType }) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(setDefaultDate(containerType));
-  const [piority, setPiority] = useState(null);
+  const [priority, setPiority] = useState({ color: 'rgba(255,255,255,0.3)' });
   const [focus, setFocus] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [popperSets, setPopper] = useState({ popper: false });
@@ -59,6 +60,7 @@ function InsertTodo({ createTodo, containerType }) {
       title,
       checked: false,
       date: { ...date },
+      priority,
     };
     setTitle('');
     createTodo(todo);

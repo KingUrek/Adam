@@ -10,6 +10,7 @@ const initalState = {
       title: 'afs',
       checked: false,
       date: { start: '05/06/2020', startTime: '11:11', endTime: undefined },
+      priority: { color: '#f44336', id: 0 },
     },
   ],
 };

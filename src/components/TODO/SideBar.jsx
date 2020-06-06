@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => (
   {
-    sidebar: { height: '100vh', borderRadius: 0 },
+    sidebar: { height: '100vh', borderRadius: 0, minWidth: 190 },
     typo: { color: 'white', textDecoration: 'none' },
     item: { '&:hover': { backgroundColor: theme.palette.primary.light } },
     selected: { backgroundColor: theme.palette.primary.main },
