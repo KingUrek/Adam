@@ -34,7 +34,7 @@ function ThisWeek() {
 
     <div className={classes.container}>
       <div className={classes.task}>
-        <ExpansionWeekContainer />
+        <ExpansionWeekContainer day="Essa semana" />
       </div>
       <div className={classes.calendarContainer}>
         {panels.map((day) => <WeekCalendarDisplay day={day} />)}

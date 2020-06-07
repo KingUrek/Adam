@@ -38,10 +38,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Calendar({ setdate, closeModal }) {
+export default function Calendar({ setdate, closeModal, date = new Date() }) {
   const classes = useStyles();
-  const [startDate, setStartDate] = useState(new Date());
-
+  const [startDate, setStartDate] = useState(new Date(date.start));
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 

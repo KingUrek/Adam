@@ -1,14 +1,12 @@
 import React from 'react';
-import { ThemeProvider, Grid, makeStyles } from '@material-ui/core';
-import darkTheme from './style/darkTheme';
+import { ThemeProvider, makeStyles } from '@material-ui/core';
+import { Route } from 'react-router-dom';
 import AllTasks from './pages/TODO/AllTasks';
 import './style/app.css';
-import PriorityList from './components/TODO/PriorityList';
 import DayPage from './pages/TODO/DayPage';
 import SideBar from './components/TODO/SideBar';
-import { Route } from 'react-router-dom';
 import ThisWeek from './pages/TODO/ThisWeek';
-import WeekCalendarDisplay from './components/TODO/ThisWeek/WeekCalendarDisplay';
+import darkTheme from './style/darkTheme';
 
 const useStyles = makeStyles((theme) => ({ container: { display: 'flex' } }));
 

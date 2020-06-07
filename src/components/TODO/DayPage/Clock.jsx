@@ -92,7 +92,7 @@ function Clock({ TODOS, type, day }) {
     draw.circle(raio * 2).fill('#C4C4C4').center(width / 2, width / 2); // Clock
     todos
       .filter((todo) => todo.type === type)
-      .forEach(({ todo }) => drawTask({ startTime: todo.date.startTime, endTime: todo.date.endTime }, 'black', width));
+      .forEach(({ todo }) => drawTask({ startTime: todo.date.startTime, endTime: todo.date.endTime }, todos.priority.color, width));
   }
 
   useEffect(() => {
@@ -110,7 +110,7 @@ function Clock({ TODOS, type, day }) {
     } else if (todos.length) {
       todos
         .filter((todo) => todo.type === type)
-        .forEach(({ todo }) => drawTask({ startTime: todo.date.startTime, endTime: todo.date.endTime }, 'black'));
+        .forEach(({ todo }) => drawTask({ startTime: todo.date.startTime, endTime: todo.date.endTime }, todo.priority.color));
     }
   }, [todos]);
 

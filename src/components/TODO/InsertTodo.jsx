@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, makeStyles, Button, Modal, ClickAwayListener, Popper } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { AiFillCalendar as CalendarIcon } from 'react-icons/ai';
@@ -9,6 +9,9 @@ import { createTodo } from '../../redux/actionCreators';
 import Calendar from './Calendar';
 import InputTimeAdornant from './InputTimeAdornant';
 import PriorityList from './PriorityList';
+import priorities from '../../services/priorities';
+
+const _ = require('lodash');
 
 const randomId = require('random-id');
 
@@ -33,21 +36,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function setDefaultDate(containerType) {
+function setDefaultDate(containerType, day) {
   if (containerType === 'Hoje') {
     return { start: moment() };
   }
   if (containerType === 'Amanhã') {
     return { start: moment().add(1, 'day') };
   }
+
+  if (containerType === 'Essa semana') {
+    return { start: moment().day(day.id) };
+  }
   return '';
 }
 
-function InsertTodo({ createTodo, containerType }) {
+function InsertTodo({ createTodo, containerType, expandedPainel }) {
   const classes = useStyles();
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(setDefaultDate(containerType));
-  const [priority, setPiority] = useState({ color: 'rgba(255,255,255,0.3)' });
+  const [date, setDate] = useState(setDefaultDate(containerType, expandedPainel));
+  const [priority, setPiority] = useState(_.last(priorities()));
   const [focus, setFocus] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [popperSets, setPopper] = useState({ popper: false });
@@ -64,7 +71,8 @@ function InsertTodo({ createTodo, containerType }) {
     };
     setTitle('');
     createTodo(todo);
-    setDate(setDefaultDate(containerType));
+    setDate(setDefaultDate(containerType, expandedPainel));
+    setPiority(_.last(priorities()));
   }
 
 
@@ -82,6 +90,10 @@ function InsertTodo({ createTodo, containerType }) {
     setPopper(popperProps);
     setPiority(priority);
   }
+
+  useEffect(() => {
+    setDate(setDefaultDate(containerType, expandedPainel));
+  }, [expandedPainel]);
 
   return (
     <>
@@ -132,7 +144,7 @@ function InsertTodo({ createTodo, containerType }) {
             onClose={() => setModalOpen(false)}
           >
             <div>
-              <Calendar setdate={setDate} closeModal={() => setModalOpen(false)} />
+              <Calendar date={date} setdate={setDate} closeModal={() => setModalOpen(false)} />
             </div>
           </Modal>
 

@@ -71,7 +71,7 @@ function ExpansionWeekContainer({ day, TODOS, setClockType }) {
       <Typography className={classes.typo} align="center" variant="h4">
         Essa Semana
       </Typography>
-      <InsertTodo containerType={day} />
+      <InsertTodo containerType={day} expandedPainel={panels.find(({ day }) => day === expanded)} />
 
       <div className={classes.expansionContainer}>
 
