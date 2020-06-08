@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     height: '56px',
     width: '100%',
     borderRadius: '6px 6px 0 0',
+    cursor: 'pointer',
+    '&:hover': { backgroundColor: theme.palette.primary.dark },
   },
   body: (props) => ({
     display: 'flex',
@@ -53,8 +55,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function formatData(TODOS, day) {
-  console.log('todos', TODOS
-    .filter((todo) => moment(todo.date.start, 'L').isSame(moment().day(day.id), 'day')));
   const data = TODOS
     .filter((todo) => moment(todo.date.start, 'L').isSame(moment().day(day.id), 'day'))
     .reduce((acc, item) => {
@@ -66,25 +66,22 @@ function formatData(TODOS, day) {
 
       return acc;
     }, {});
-  console.log('array', data);
   if (Object.keys(data).length) {
-    console.log('tem data', data);
     return Object.keys(data)
       .map((item) => ({ color: item, todos: data[item], value: data[item].length }));
   }
   return [];
 }
 
-function WeekCalendarDisplay({ day, height = 280, TODOS }) {
+function WeekCalendarDisplay({ setExpanded, day, height = 280, TODOS }) {
   const classes = useStyles({ height });
 
 
   const data = formatData(TODOS, day);
 
-  console.log(data);
   return (
     <div className={classes.container}>
-      <div className={classes.header}>
+      <div onClick={() => setExpanded(day.day)} className={classes.header}>
         <Typography className={classes.typo}>
           {day.day}
         </Typography>

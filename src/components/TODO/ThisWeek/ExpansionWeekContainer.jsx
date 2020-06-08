@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, makeStyles, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -58,11 +58,17 @@ const panels = [
 ];
 
 
-function ExpansionWeekContainer({ day, TODOS, setClockType }) {
+function ExpansionWeekContainer({ shouldExpand, day, TODOS, setClockType }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = useState('Terça');
+  const [expanded, setExpanded] = useState(panels.find(({ id }) => id === moment().day()).day);
 
-  console.log(moment().day(0).format('L'));
+  console.log(moment().day());
+
+  useEffect(() => {
+    if (shouldExpand) {
+      setExpanded(shouldExpand);
+    }
+  }, [shouldExpand]);
 
 
   return (

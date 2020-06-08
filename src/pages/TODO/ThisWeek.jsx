@@ -30,14 +30,15 @@ const panels = [
 
 function ThisWeek() {
   const classes = useStyle();
+  const [expanded, setExpanded] = React.useState();
   return (
 
     <div className={classes.container}>
       <div className={classes.task}>
-        <ExpansionWeekContainer day="Essa semana" />
+        <ExpansionWeekContainer shouldExpand={expanded} day="Essa semana" />
       </div>
       <div className={classes.calendarContainer}>
-        {panels.map((day) => <WeekCalendarDisplay day={day} />)}
+        {panels.map((day) => <WeekCalendarDisplay setExpanded={setExpanded} day={day} />)}
       </div>
 
 
