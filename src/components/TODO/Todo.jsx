@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100 %',
     paddingLeft: 10,
   },
-  // root: { color: orange[500] },
+  root: (props) => ({ color: props.priority.color }),
 
   hour: { margin: 0, marginLeft: 'auto', marginRight: 10 },
 }));
 
-export default function Todo({ checked: check = false, title, id, date, day }) {
-  const classes = useStyles();
+export default function Todo({ checked: check = false, title, id, date, day, priority }) {
+  const classes = useStyles({ priority });
   const ref = useRef();
   useEffect(() => {
     anime({
