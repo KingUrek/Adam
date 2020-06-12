@@ -7,6 +7,7 @@ import DayPage from './pages/TODO/DayPage';
 import SideBar from './components/TODO/SideBar';
 import ThisWeek from './pages/TODO/ThisWeek';
 import darkTheme from './style/darkTheme';
+import SomeDay from './pages/TODO/SomeDay';
 
 const useStyles = makeStyles((theme) => ({ container: { display: 'flex' } }));
 
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/thisweek">
           <ThisWeek />
+        </Route>
+        <Route path="/someday">
+          <SomeDay />
         </Route>
       </div>
 
